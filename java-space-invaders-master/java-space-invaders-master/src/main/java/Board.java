@@ -52,7 +52,7 @@ public class Board extends JPanel implements Runnable, Commons {
 	public Board() {
 		addKeyListener(new TAdapter());
 		setFocusable(true);
-		d = new Dimension(BOARD_WIDTH, BOARD_HEIGTH);
+		d = new Dimension(GameSettings.getInstance().BOARD_WIDTH, GameSettings.getInstance().BOARD_HEIGHT);
 		setBackground(Color.black);
 
 		gameInit();
@@ -164,7 +164,7 @@ public class Board extends JPanel implements Runnable, Commons {
 		vunnet = new Won();
 
 		// g.setColor(Color.black);
-		g.fillRect(0, 0, BOARD_WIDTH, BOARD_HEIGTH);
+		g.fillRect(0, 0, GameSettings.getInstance().BOARD_WIDTH, GameSettings.getInstance().BOARD_HEIGHT);
 		if (havewon == true) {
 			g.drawImage(vunnet.getImage(), 0, 0, this);
 		} else {
@@ -185,9 +185,9 @@ public class Board extends JPanel implements Runnable, Commons {
 	}
 
 	public void animationCycle() {
-		if (deaths == NUMBER_OF_ALIENS_TO_DESTROY) {
+		if (deaths == Commons.NUMBER_OF_ALIENS_TO_DESTROY) {
 			ingame = false;
-			message = "Parabéns! Você salvou a galáxia!";
+			message = "Parabï¿½ns! Vocï¿½ salvou a galï¿½xia!";
 		}
 
 		// player
@@ -206,9 +206,9 @@ public class Board extends JPanel implements Runnable, Commons {
 				int alienY = alien.getY();
 
 				if (alien.isVisible() && shot.isVisible()) {
-					if (shotX >= (alienX) && shotX <= (alienX + ALIEN_WIDTH)
+					if (shotX >= (alienX) && shotX <= (alienX + Commons.ALIEN_WIDTH)
 							&& shotY >= (alienY)
-							&& shotY <= (alienY + ALIEN_HEIGHT)) {
+							&& shotY <= (alienY + Commons.ALIEN_HEIGHT)) {
 						ImageIcon ii = new ImageIcon(getClass().getResource(
 								expl));
 						alien.setImage(ii.getImage());
@@ -266,7 +266,7 @@ public class Board extends JPanel implements Runnable, Commons {
 				if (y > GROUND - ALIEN_HEIGHT) {
 					havewon = false;
 					ingame = false;
-					message = "Aliens estão invadindo a galáxia!";
+					message = "Aliens estï¿½o invadindo a galï¿½xia!";
 				}
 
 				alien.act(direction);
@@ -309,7 +309,7 @@ public class Board extends JPanel implements Runnable, Commons {
 
 			if (!b.isDestroyed()) {
 				b.setY(b.getY() + 1);
-				if (b.getY() >= GROUND - BOMB_HEIGHT) {
+				if (b.getY() >= Commons.GROUND - Commons.BOMB_HEIGHT) {
 					b.setDestroyed(true);
 				}
 			}
@@ -326,7 +326,7 @@ public class Board extends JPanel implements Runnable, Commons {
 			animationCycle();
 
 			timeDiff = System.currentTimeMillis() - beforeTime;
-			sleep = DELAY - timeDiff;
+			sleep = Commons.DELAY - timeDiff;
 
 			if (sleep < 0)
 				sleep = 1;
