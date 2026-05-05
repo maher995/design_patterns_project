@@ -21,7 +21,7 @@ public class Board extends JPanel implements Runnable {
     private SpriteFactory spriteFactory = new SpriteFactory();
 
     private Dimension d;
-    private ArrayList aliens;
+    private AlienGroup aliens;
     private Player player;
     private Shot shot;
     private GameOver gameend;
@@ -55,7 +55,7 @@ public class Board extends JPanel implements Runnable {
     }
 
     public void gameInit() {
-        aliens = new ArrayList();
+        aliens = new AlienGroup();
 
         // Refactored: Using Factory to create Aliens
         for (int i = 0; i < 4; i++) {
@@ -77,16 +77,7 @@ public class Board extends JPanel implements Runnable {
     }
 
     public void drawAliens(Graphics g) {
-        Iterator it = aliens.iterator();
-        while (it.hasNext()) {
-            Alien alien = (Alien) it.next();
-            if (alien.isVisible()) {
-                g.drawImage(alien.getImage(), alien.getX(), alien.getY(), this);
-            }
-            if (alien.isDying()) {
-                alien.die();
-            }
-        }
+        aliens.draw(g, this);
     }
 
     public void drawPlayer(Graphics g) {
@@ -106,9 +97,7 @@ public class Board extends JPanel implements Runnable {
     }
 
     public void drawBombing(Graphics g) {
-        Iterator i3 = aliens.iterator();
-        while (i3.hasNext()) {
-            Alien a = (Alien) i3.next();
+        for (Alien a : aliens.getMembers()) {
             Bomb b = a.getBomb();
             if (!b.isDestroyed()) {
                 g.drawImage(b.getImage(), b.getX(), b.getY(), this);
@@ -167,12 +156,11 @@ public class Board extends JPanel implements Runnable {
         player.act();
 
         if (shot.isVisible()) {
-            Iterator it = aliens.iterator();
+
             int shotX = shot.getX();
             int shotY = shot.getY();
 
-            while (it.hasNext()) {
-                Alien alien = (Alien) it.next();
+            for (Alien alien : aliens.getMembers()) {
                 int alienX = alien.getX();
                 int alienY = alien.getY();
 
@@ -196,31 +184,23 @@ public class Board extends JPanel implements Runnable {
         }
 
         // Aliens Movement
-        Iterator it1 = aliens.iterator();
-        while (it1.hasNext()) {
-            Alien a1 = (Alien) it1.next();
+        for (Alien a1 : aliens.getMembers()) {
             int x = a1.getX();
             if (x >= settings.BOARD_WIDTH - settings.BORDER_RIGHT && direction != -1) {
                 direction = -1;
-                Iterator i1 = aliens.iterator();
-                while (i1.hasNext()) {
-                    Alien a2 = (Alien) i1.next();
+                for (Alien a2 : aliens.getMembers()) {
                     a2.setY(a2.getY() + settings.GO_DOWN);
                 }
             }
             if (x <= settings.BORDER_LEFT && direction != 1) {
                 direction = 1;
-                Iterator i2 = aliens.iterator();
-                while (i2.hasNext()) {
-                    Alien a = (Alien) i2.next();
+                for (Alien a : aliens.getMembers()) {
                     a.setY(a.getY() + settings.GO_DOWN);
                 }
             }
         }
 
-        Iterator it = aliens.iterator();
-        while (it.hasNext()) {
-            Alien alien = (Alien) it.next();
+        for (Alien alien : aliens.getMembers()) {
             if (alien.isVisible()) {
                 int y = alien.getY();
                 if (y > settings.GROUND - settings.ALIEN_HEIGHT) {
@@ -233,11 +213,9 @@ public class Board extends JPanel implements Runnable {
         }
 
         // Bombs
-        Iterator i3 = aliens.iterator();
         Random generator = new Random();
-        while (i3.hasNext()) {
+        for (Alien a : aliens.getMembers()) {
             int chance = generator.nextInt(15);
-            Alien a = (Alien) i3.next();
             Bomb b = a.getBomb();
             if (chance == settings.CHANCE && a.isVisible() && b.isDestroyed()) {
                 b.setDestroyed(false);
