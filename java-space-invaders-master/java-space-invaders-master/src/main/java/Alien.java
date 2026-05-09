@@ -1,10 +1,11 @@
-import javax.swing.ImageIcon;
+import javax.swing.*;
+import java.awt.*;
 
 /**
  * 
  * @author 
  */
-public class Alien extends Sprite {
+public class Alien extends Sprite implements AlienComponent {
 
     private Bomb bomb;
     private final String alien = "/img/alien.png";
@@ -19,6 +20,11 @@ public class Alien extends Sprite {
         bomb = new Bomb(x, y);
         ImageIcon ii = new ImageIcon(this.getClass().getResource(alien));
         setImage(ii.getImage());
+
+    }
+
+    @Override
+    public void draw(Graphics g, JPanel panel) {
 
     }
 
