@@ -59,12 +59,7 @@ public class Board extends JPanel implements Runnable {
     }
 
     public void gameInit() {
-<<<<<<< HEAD
-
-        aliens = new ArrayList();
-=======
         aliens = new AlienGroup();
->>>>>>> aa3a2ac7f65244bf66dff4ba1a9da797a51df09d
 
         // Refactored: Using Factory to create Aliens
         for (int i = 0; i < 4; i++) {
@@ -86,25 +81,7 @@ public class Board extends JPanel implements Runnable {
     }
 
     public void drawAliens(Graphics g) {
-<<<<<<< HEAD
-
-        Iterator it = aliens.iterator();
-
-        while (it.hasNext()) {
-
-            Alien alien = (Alien) it.next();
-
-            if (alien.isVisible()) {
-                g.drawImage(alien.getImage(), alien.getX(), alien.getY(), this);
-            }
-
-            if (alien.isDying()) {
-                alien.die();
-            }
-        }
-=======
         aliens.draw(g, this);
->>>>>>> aa3a2ac7f65244bf66dff4ba1a9da797a51df09d
     }
 
     public void drawPlayer(Graphics g) {
@@ -128,16 +105,7 @@ public class Board extends JPanel implements Runnable {
     }
 
     public void drawBombing(Graphics g) {
-<<<<<<< HEAD
-
-        Iterator i3 = aliens.iterator();
-
-        while (i3.hasNext()) {
-
-            Alien a = (Alien) i3.next();
-=======
         for (Alien a : aliens.getMembers()) {
->>>>>>> aa3a2ac7f65244bf66dff4ba1a9da797a51df09d
             Bomb b = a.getBomb();
 
             if (!b.isDestroyed()) {
@@ -212,22 +180,10 @@ public class Board extends JPanel implements Runnable {
 
         if (shot.isVisible()) {
 
-<<<<<<< HEAD
-            Iterator it = aliens.iterator();
-
-            int shotX = shot.getX();
-            int shotY = shot.getY();
-
-            while (it.hasNext()) {
-
-                Alien alien = (Alien) it.next();
-
-=======
             int shotX = shot.getX();
             int shotY = shot.getY();
 
             for (Alien alien : aliens.getMembers()) {
->>>>>>> aa3a2ac7f65244bf66dff4ba1a9da797a51df09d
                 int alienX = alien.getX();
                 int alienY = alien.getY();
 
@@ -258,29 +214,13 @@ public class Board extends JPanel implements Runnable {
         }
 
         // Aliens Movement
-<<<<<<< HEAD
-        Iterator it1 = aliens.iterator();
-
-        while (it1.hasNext()) {
-
-            Alien a1 = (Alien) it1.next();
-=======
         for (Alien a1 : aliens.getMembers()) {
->>>>>>> aa3a2ac7f65244bf66dff4ba1a9da797a51df09d
             int x = a1.getX();
 
             if (x >= settings.BOARD_WIDTH - settings.BORDER_RIGHT && direction != -1) {
 
                 direction = -1;
-<<<<<<< HEAD
-
-                Iterator i1 = aliens.iterator();
-
-                while (i1.hasNext()) {
-                    Alien a2 = (Alien) i1.next();
-=======
                 for (Alien a2 : aliens.getMembers()) {
->>>>>>> aa3a2ac7f65244bf66dff4ba1a9da797a51df09d
                     a2.setY(a2.getY() + settings.GO_DOWN);
                 }
             }
@@ -288,30 +228,13 @@ public class Board extends JPanel implements Runnable {
             if (x <= settings.BORDER_LEFT && direction != 1) {
 
                 direction = 1;
-<<<<<<< HEAD
-
-                Iterator i2 = aliens.iterator();
-
-                while (i2.hasNext()) {
-                    Alien a = (Alien) i2.next();
-=======
                 for (Alien a : aliens.getMembers()) {
->>>>>>> aa3a2ac7f65244bf66dff4ba1a9da797a51df09d
                     a.setY(a.getY() + settings.GO_DOWN);
                 }
             }
         }
 
-<<<<<<< HEAD
-        Iterator it = aliens.iterator();
-
-        while (it.hasNext()) {
-
-            Alien alien = (Alien) it.next();
-
-=======
         for (Alien alien : aliens.getMembers()) {
->>>>>>> aa3a2ac7f65244bf66dff4ba1a9da797a51df09d
             if (alien.isVisible()) {
 
                 int y = alien.getY();
@@ -328,17 +251,8 @@ public class Board extends JPanel implements Runnable {
 
         // Bombs
         Random generator = new Random();
-<<<<<<< HEAD
-
-        while (i3.hasNext()) {
-
-            int chance = generator.nextInt(15);
-
-            Alien a = (Alien) i3.next();
-=======
         for (Alien a : aliens.getMembers()) {
             int chance = generator.nextInt(15);
->>>>>>> aa3a2ac7f65244bf66dff4ba1a9da797a51df09d
             Bomb b = a.getBomb();
 
             if (chance == settings.CHANCE && a.isVisible() && b.isDestroyed()) {
