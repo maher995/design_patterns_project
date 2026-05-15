@@ -23,10 +23,11 @@ public class Board extends JPanel implements Runnable {
 
     private Dimension d;
     private AlienGroup aliens;
-    private Player player;
+    Player player;
     private Shot shot;
     private GameOver gameend;
     private Won vunnet;
+    private GameState currentState;
 
     private int alienX = 150;
     private int alienY = 25;
@@ -50,6 +51,10 @@ public class Board extends JPanel implements Runnable {
 
         gameInit();
         setDoubleBuffered(true);
+    }
+
+    public void setGameState(GameState newState) {
+        this.currentState = newState;
     }
 
     @Override
@@ -119,22 +124,24 @@ public class Board extends JPanel implements Runnable {
     }
 
     @Override
-    public void paint(Graphics g) {
+   public void paint(Graphics g) {
 
-        super.paint(g);
+       super.paint(g);
 
         g.setColor(Color.black);
-        g.fillRect(0, 0, d.width, d.height);
-        g.setColor(Color.green);
+       g.fillRect(0, 0, d.width, d.height);
+       g.setColor(Color.green);
 
-        if (ingame) {
-            // Facade Pattern: draw all game elements through GameFacade
+       if (ingame) {
+            // Facade Pattern;: draw all game elements through GameFacade
             gameFacade.drawGame(g);
         }
 
         Toolkit.getDefaultToolkit().sync();
         g.dispose();
     }
+
+
 
     public void gameOver() {
 
@@ -328,6 +335,15 @@ public class Board extends JPanel implements Runnable {
 
         // Facade Pattern: show final game result through GameFacade
         gameFacade.showGameResult();
+    }
+
+    public void updateAliens() {
+    }
+
+    public void checkCollisions() {
+    }
+
+    public void drawGameEnd(Graphics g) {
     }
 
     private class TAdapter extends KeyAdapter {
